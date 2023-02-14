@@ -1,14 +1,16 @@
-
-import './App.css'
+import React from 'react';
+import style from './App.module.css'
+import { TodoList } from './components/TodoList/TodoList';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <div className="App">
-      Hello world
-
+    <div>
+      <TodoList/>
     </div>
+    
+
+    
   )
 }
 
