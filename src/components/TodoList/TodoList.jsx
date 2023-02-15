@@ -2,37 +2,24 @@ import {useState} from 'react'
 import {TodoItem} from '../TodoItem/TodoItem'
 import style from './TodoList.module.css'
 
-export const TodoList = () => {
-    const [todo, setTodos] = useState([
-        {
-            id:  1,
-            title:  'Do HomeWork'    
-        },
-        {
-            id:  2,
-            title:  'Go shopping'    
-        },
-        {
-            id:  3,
-            title:  'Do cleaning'    
-        },
-        
-        
-    ])
 
-    const removePost = ()=>{
-        
-    }
+
+export const TodoList = ({todo, removePost}) => {
+    
 
   return (
+ 
+   
     <div className={style.todos}>
         {todo.map((item, index) => 
         <TodoItem 
-        key={index.id} 
+        key={item.id} 
         removePost={removePost}
-        title ={item.title}/>
+        todo ={item}/>
         )}
     </div>
+    
+  
   )
 }
 export default TodoList
