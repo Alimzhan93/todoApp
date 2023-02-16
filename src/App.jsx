@@ -3,36 +3,30 @@ import style from "./App.module.css";
 import AddTodo from "./components/AddTodo/AddTodo";
 import { TodoList } from "./components/TodoList/TodoList";
 import { SearchTodo } from "./components/searthTodo/SearchTodo";
+import { Loader } from './components/Loader/Loader';
+
 
 function App() {
-  const [todo, setTodos] = useState([
-    {
-      id: 1,
-      title: "Do HomeWork",
-    },
-    {
-      id: 2,
-      title: "Go shopping",
-    },
-    {
-      id: 3,
-      title: "Do cleaning",
-    },
-  ]);
+  const [todo, setTodos] = useState([]);
+  const [loding, setLoding] = useState(false);
 
-  useEffect(() =>{
-    getTodos()
-  },[])
+  useEffect(() => {
+    getTodos();
+  }, []);
 
-  const getTodos = async() =>{
-    const responce = fetch('https://jsonplaceholder.typicode.com/todos')
-    const data = await responce.json()
-    console.log(responce);
-}
-
-
-
-
+  const getTodos = async () => {
+    try {
+      setLoding(true);
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/todos"
+      );
+      const data = await response.json();
+      setLoding(false);
+      setTodos(data);
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   const removePost = (id) => {
     const todos = todo.filter((item) => item.id !== id);
@@ -59,7 +53,12 @@ function App() {
       <AddTodo addNewTodo={addNewTodo} />
       <hr />
       {/* <SearchTodo findTodos={findTodo} /> */}
-      <TodoList todo={todo} removePost={removePost} />
+
+      {loding ? (
+        <Loader />
+      ) : (
+        <TodoList todo={todo} removePost={removePost} />
+      )}
     </div>
   );
 }
